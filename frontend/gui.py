@@ -166,6 +166,7 @@ class ToDoApp(QWidget):
 
     @staticmethod
     def is_windows_dark_mode():
+        """Detect Windows dark mode setting."""
         try:
             registry = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
             key = winreg.OpenKey(
@@ -175,7 +176,7 @@ class ToDoApp(QWidget):
             value, _ = winreg.QueryValueEx(key, "AppsUseLightTheme")
             winreg.CloseKey(key)
             return value == 0
-        except:
+        except (FileNotFoundError, OSError, PermissionError):
             return False
 
     def initUI(self):
